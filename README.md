@@ -1,4 +1,4 @@
-# Religious fallacies examples in numbers
+# Religious fallacies examples in numbers - Work in Progress
 
 Across religious debates, arguments are thrown left and right without much quantification, which makes the discussion
 very counter productive. Therefore, I have setup this repository as a collection of examples.
@@ -12,7 +12,6 @@ Feel free to contibute and/or suggest any changes.
 
 * **Daniel Prelipcean** - *Initial work* - [dprelipcean](https://github.com/dprelipcean)
 
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 
 ## License
 
