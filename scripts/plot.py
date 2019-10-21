@@ -6,6 +6,8 @@ def compare_names(str1, str2):
     """Compare two strings alphabetically."""
     if str1 == str2:
         return "identical"
+    elif not str1 or not str2:
+        return False
     else:
         for index in range(min(len(str1), len(str2))):
             if str1[index] == str2[index]:
@@ -16,7 +18,23 @@ def compare_names(str1, str2):
                 return "searching"
 
 
-def default_plot(x, y, txt, annotate=False):
+def convert_to_number(str_float):
+    """Converts a number retrieved as str from the csv file to float.
+
+    Also does curation of inputs.
+    """
+    if not str_float:
+        return False
+    elif str_float[-1] is "%":
+        return float(str_float[:-1])
+    elif str_float[-1] is "+":
+        return float(str_float[:-2])
+    else:
+        return float(str_float)
+
+
+def default_plot(x, y, txt, file_name="test.png", annotate=False):
+    """Plot the data sets with some default parameters."""
     fig, ax = plt.subplots()
     ax.plot(x, y, 'o')
 
@@ -31,18 +49,18 @@ def default_plot(x, y, txt, annotate=False):
                         ha='left',  # horizontal alignment can be left, right or center
                         )
 
-    fig.savefig("figures/test.png")
+    fig.savefig(file_name)
     plt.show()
 
 
-def main(data_file1, data_file2, annotate=False):
+def main(data_file1, data_file2, file_name, annotate=False, to_plot=True):
 
     # Initialize data storage
     data_countries = list()
     data_religiosity_levels = list()
     data_education_index = list()
 
-    # Open data fles
+    # Open data flesconvert_to_number
     with open(data_file1) as csv_file_1:
         with open(data_file2) as csv_file_2:
 
@@ -50,24 +68,54 @@ def main(data_file1, data_file2, annotate=False):
             csv_reader_2 = csv.DictReader(csv_file_2, delimiter=',')
 
             # Read data files line by line
+            country_2 = None
             for row_1 in csv_reader_1:
-                for row_2 in csv_reader_2:
+                country_1 = row_1['Country']
 
-                    result = compare_names(row_1['Country'], row_2['Country'])
+                result = compare_names(country_1, country_2)
+                print("Step 1: ", country_1, country_2)
+                print(result)
+                if result == "identical":
+
+                    data_point1 = convert_to_number(row_1["Religion is important"])
+                    data_point2 = convert_to_number(row_2["EducationIndex"])
+
+                    if data_point1 and data_point2:
+                        data_religiosity_levels.append(data_point1)
+                        data_education_index.append(data_point2)
+
+                        data_countries.append(row_1["Country"])
+                elif result == "overpassed":
+                    continue
+
+                for row_2 in csv_reader_2:
+                    country_2 = row_2['Country']
+
+                    result = compare_names(country_1, country_2)
+                    print("Step 2: ", country_1, country_2)
+                    print(result)
 
                     if result == "identical":
-                        data_countries.append(row_1["Country"])
 
-                        data_religiosity_levels.append(float(row_1["Religion is important"][:-1]))
-                        data_education_index.append(float(row_2["EducationIndex"]))
-                        continue
+                        data_point1 = convert_to_number(row_1["Religion is important"])
+                        data_point2 = convert_to_number(row_2["EducationIndex"])
 
-                    if result == "overpassed":
+                        if data_point1 and data_point2:
+                            data_religiosity_levels.append(data_point1)
+                            data_education_index.append(data_point2)
+
+                            data_countries.append(row_1["Country"])
+                        break
+                    elif result == "overpassed":
                         break
 
     # Plot
-    default_plot(data_religiosity_levels, data_education_index, data_countries)
+    if to_plot:
+        default_plot(data_religiosity_levels, data_education_index, data_countries, file_name=file_name, annotate=annotate)
+
+    print(data_countries)
+    print(f"Found {len(data_countries)} matches")
 
 
 if __name__ == "__main__":
-    main('data/religiosity-levels.csv', 'data/education-index.csv')
+    main('data/religiosity-levels.csv', 'data/education-index.csv', file_name="figures/education-index.png")
