@@ -39,7 +39,7 @@ def default_plot(x, y, txt, file_name="test.png", annotate=False):
     ax.plot(x, y, 'o')
 
     plt.xlabel("Country religiosity levels (%)")
-    plt.ylabel("Country Education Index (a.u.)")
+    plt.ylabel("Quality of Life Index (a.u.)")
 
     if annotate:
         for i in range(len(txt)):
@@ -78,7 +78,7 @@ def main(data_file1, data_file2, file_name, annotate=False, to_plot=True):
                 if result == "identical":
 
                     data_point1 = convert_to_number(row_1["Religion is important"])
-                    data_point2 = convert_to_number(row_2["EducationIndex"])
+                    data_point2 = convert_to_number(row_2["Quality of Life Index"])
 
                     if data_point1 and data_point2:
                         data_religiosity_levels.append(data_point1)
@@ -98,7 +98,7 @@ def main(data_file1, data_file2, file_name, annotate=False, to_plot=True):
                     if result == "identical":
 
                         data_point1 = convert_to_number(row_1["Religion is important"])
-                        data_point2 = convert_to_number(row_2["EducationIndex"])
+                        data_point2 = convert_to_number(row_2["Quality of Life Index"])
 
                         if data_point1 and data_point2:
                             data_religiosity_levels.append(data_point1)
@@ -118,4 +118,4 @@ def main(data_file1, data_file2, file_name, annotate=False, to_plot=True):
 
 
 if __name__ == "__main__":
-    main('data/religiosity-levels.csv', 'data/education-index.csv', file_name="figures/education-index.png")
+    main('../data/religiosity-levels.csv', '../data/quality-of-life.csv', file_name="../figures/test.png")
