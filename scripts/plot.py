@@ -1,5 +1,7 @@
 import csv
+import numpy as np
 import matplotlib.pyplot as plt
+from scipy.stats import linregress
 
 
 def compare_names(str1, str2):
@@ -34,27 +36,41 @@ def convert_to_number(str_float):
 
 
 def extract_name_from_file(filename):
+    """Extract a name from the filename."""
     return filename[8:-4]
 
 
-def default_plot(x, y, txt, file_name="test.png", annotate=False, ylabel=None):
+def default_plot(x, y, txt, regression_x=None, regression_y=None, file_name="test.png", annotate=False, ylabel=None):
     """Plot the data sets with some default parameters."""
     fig, ax = plt.subplots()
     ax.plot(x, y, 'o')
 
     plt.xlabel("Country religiosity levels (%)")
-    plt.ylabel("Quality of Life Index (a.u.)")
+    plt.ylabel(f"{ylabel} (a.u.)")
 
     if annotate:
         for i in range(len(txt)):
             ax.annotate(txt[i], (x[i], y[i]),
                         textcoords="offset points",  # how to position the text
-                        xytext=(-10,-10),  # distance from text to points (x,y)
+                        xytext=(-10, -10),  # distance from text to points (x,y)
                         ha='left',  # horizontal alignment can be left, right or center
                         )
 
+    plt.plot(regression_x, regression_y, '-r')
+    ax.legend(['Data Points', 'Regression Line'])
+
     fig.savefig(file_name)
     plt.show()
+
+
+def regression_points(x, y):
+    """Find regression line"""
+    gradient, intercept, r_value, p_value, std_err = linregress(x, y)
+    mn = np.min(x)
+    mx = np.max(x)
+    x1 = np.linspace(mn, mx, 500)
+    y1 = gradient * x1 + intercept
+    return x1, y1
 
 
 def main(data_file1, data_file2, file_name, annotate=False, to_plot=True, data_feature=None):
@@ -64,7 +80,7 @@ def main(data_file1, data_file2, file_name, annotate=False, to_plot=True, data_f
     data_religiosity_levels = list()
     data_education_index = list()
 
-    # Open data flesconvert_to_number
+    # Open data and convert_to_number
     with open(data_file1) as csv_file_1:
         with open(data_file2) as csv_file_2:
 
@@ -113,10 +129,14 @@ def main(data_file1, data_file2, file_name, annotate=False, to_plot=True, data_f
                     elif result == "overpassed":
                         break
 
+    # Find regression lines
+    x, y = regression_points(data_religiosity_levels, data_education_index)
+
     # Plot
     ylabel = extract_name_from_file(data_file2)
     if to_plot:
         default_plot(data_religiosity_levels, data_education_index, data_countries,
+                     regression_x=x, regression_y=y,
                      file_name=file_name, annotate=annotate, ylabel=ylabel)
 
     print(data_countries)
@@ -124,6 +144,6 @@ def main(data_file1, data_file2, file_name, annotate=False, to_plot=True, data_f
 
 
 if __name__ == "__main__":
-    main('../data/religiosity-levels.csv', '../data/happiness-index.csv',
+    main('../data/religiosity-levels.csv', '../data/Happiness-index.csv',
          data_feature='Score',
          file_name="../figures/happiness-index.png")
