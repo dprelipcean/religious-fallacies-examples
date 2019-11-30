@@ -33,7 +33,11 @@ def convert_to_number(str_float):
         return float(str_float)
 
 
-def default_plot(x, y, txt, file_name="test.png", annotate=False):
+def extract_name_from_file(filename):
+    return filename[8:-4]
+
+
+def default_plot(x, y, txt, file_name="test.png", annotate=False, ylabel=None):
     """Plot the data sets with some default parameters."""
     fig, ax = plt.subplots()
     ax.plot(x, y, 'o')
@@ -53,7 +57,7 @@ def default_plot(x, y, txt, file_name="test.png", annotate=False):
     plt.show()
 
 
-def main(data_file1, data_file2, file_name, annotate=False, to_plot=True):
+def main(data_file1, data_file2, file_name, annotate=False, to_plot=True, data_feature=None):
 
     # Initialize data storage
     data_countries = list()
@@ -78,7 +82,7 @@ def main(data_file1, data_file2, file_name, annotate=False, to_plot=True):
                 if result == "identical":
 
                     data_point1 = convert_to_number(row_1["Religion is important"])
-                    data_point2 = convert_to_number(row_2["Quality of Life Index"])
+                    data_point2 = convert_to_number(row_2[data_feature])
 
                     if data_point1 and data_point2:
                         data_religiosity_levels.append(data_point1)
@@ -98,7 +102,7 @@ def main(data_file1, data_file2, file_name, annotate=False, to_plot=True):
                     if result == "identical":
 
                         data_point1 = convert_to_number(row_1["Religion is important"])
-                        data_point2 = convert_to_number(row_2["Quality of Life Index"])
+                        data_point2 = convert_to_number(row_2[data_feature])
 
                         if data_point1 and data_point2:
                             data_religiosity_levels.append(data_point1)
@@ -110,12 +114,16 @@ def main(data_file1, data_file2, file_name, annotate=False, to_plot=True):
                         break
 
     # Plot
+    ylabel = extract_name_from_file(data_file2)
     if to_plot:
-        default_plot(data_religiosity_levels, data_education_index, data_countries, file_name=file_name, annotate=annotate)
+        default_plot(data_religiosity_levels, data_education_index, data_countries,
+                     file_name=file_name, annotate=annotate, ylabel=ylabel)
 
     print(data_countries)
     print(f"Found {len(data_countries)} matches")
 
 
 if __name__ == "__main__":
-    main('../data/religiosity-levels.csv', '../data/quality-of-life.csv', file_name="../figures/test.png")
+    main('../data/religiosity-levels.csv', '../data/happiness-index.csv',
+         data_feature='Score',
+         file_name="../figures/happiness-index.png")
