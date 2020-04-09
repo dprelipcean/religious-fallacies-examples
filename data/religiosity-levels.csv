@@ -1,4 +1,4 @@
-No.,Country,Religion is important,"No, unimportant"
+No.,Country,Religion is important,Religion is unimportant
 1,Algeria,95%,4%
 2,Argentina,65%,34%
 3,Australia,32%,68%
@@ -24,7 +24,7 @@ No.,Country,Religion is important,"No, unimportant"
 23,Ecuador,82%,17%
 24,Egypt,97%,2%
 25,Estonia,16%,78%
-26,Ethiopia,99%+,0%
+26,Ethiopia,99%,0%
 27,Finland,28%,70%
 28,France,30%,69%
 29,Georgia,81%,16%

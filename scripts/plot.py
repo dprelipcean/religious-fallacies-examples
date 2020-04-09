@@ -3,61 +3,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 
-
-def compare_names(str1, str2):
-    """Compare two strings alphabetically."""
-    if str1 == str2:
-        return "identical"
-    elif not str1 or not str2:
-        return False
-    else:
-        for index in range(min(len(str1), len(str2))):
-            if str1[index] == str2[index]:
-                continue
-            elif str1[index] < str2[index]:
-                return "overpassed"
-            else:
-                return "searching"
+from scripts.utils import compare_names, convert_to_number, extract_name_from_file
 
 
-def convert_to_number(str_float):
-    """Converts a number retrieved as str from the csv file to float.
-
-    Also does curation of inputs.
-    """
-    if not str_float:
-        return False
-    elif str_float[-1] is "%":
-        return float(str_float[:-1])
-    elif str_float[-1] is "+":
-        return float(str_float[:-2])
-    else:
-        return float(str_float)
-
-
-def extract_name_from_file(filename):
-    """Extract a name from the filename."""
-    return filename[8:-4]
-
-
-def default_plot(x, y, txt, regression_x=None, regression_y=None, file_name="test.png", annotate=False, ylabel=None):
+def default_plot(x, y, txt=None, regression_x=None, regression_y=None, file_name="test.png", ylabel=None):
     """Plot the data sets with some default parameters."""
     fig, ax = plt.subplots()
     ax.plot(x, y, 'o')
 
-    plt.xlabel("Country religiosity levels (%)")
-    plt.ylabel(f"{ylabel} (a.u.)")
+    plt.xlabel(f"{ylabel} (a.u.)")
+    plt.ylabel("Country religiosity levels (%)")
 
-    if annotate:
+    if txt:
         for i in range(len(txt)):
             ax.annotate(txt[i], (x[i], y[i]),
                         textcoords="offset points",  # how to position the text
                         xytext=(-10, -10),  # distance from text to points (x,y)
                         ha='left',  # horizontal alignment can be left, right or center
                         )
-
-    plt.plot(regression_x, regression_y, '-r')
-    ax.legend(['Data Points', 'Regression Line'])
+    if regression_x and regression_y:
+        plt.plot(regression_x, regression_y, '-r')
+        ax.legend(['Data Points', 'Regression Line'])
 
     fig.savefig(file_name)
     plt.show()
