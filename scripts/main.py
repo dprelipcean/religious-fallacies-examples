@@ -1,14 +1,17 @@
-from scripts.congregate_data import congregate_data, extract_data
-from scripts.plot import default_plot
+from scripts.congregate_data import congregate_data
+from scripts.plot import plot_education_index, default_plot, plot_research_expenditure_absolute, plot_research_expenditure_relative
 
 
 def main():
     master_data = congregate_data()
-    data_education, data_religion = extract_data(master_data, 'EducationIndex', 'Religion is important')
+    index_list = ['Happiness Score', 'Generosity', 'Freedom to make life choices', 'Perceptions of corruption']
 
-    print(f'{data_education}{data_religion}')
+    # plot_education_index(master_data)
+    # plot_research_expenditure_absolute(master_data)
+    # plot_research_expenditure_relative(master_data)
 
-    default_plot(data_education, data_religion)
+    for index in index_list:
+        default_plot(master_data, index)
 
 
 if __name__ == "__main__":

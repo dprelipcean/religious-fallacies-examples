@@ -2,7 +2,9 @@ import csv
 
 data_location = '../data/'
 data_files = {'education-index.csv': ['EducationIndex', 'Expected years of schooling', 'Mean years of schooling', 'HDI rank'],
-              'religiosity-levels.csv': ['Religion is important', 'Religion is unimportant']}
+              'religiosity-levels.csv': ['Religion is important', 'Religion is unimportant'],
+              'happiness-index.csv': ['Happiness Score', 'GDP per capita', 'Social support', 'Healthy life expectancy', 'Freedom to make life choices', 'Generosity', 'Perceptions of corruption'],
+              'research.csv': ['Expenditures on R&D (billions of USD)', '% of GDP']}
 
 
 def congregate_data():
@@ -20,7 +22,9 @@ def congregate_data():
                     if country not in master_data.keys():
                         master_data[country] = dict()
 
-                    if value:
+                    if value == 'n.a.':
+                        continue
+                    elif value:
                         try:
                             master_data[country][index] = float(value)
                         except ValueError:
@@ -34,10 +38,12 @@ def extract_data(dictionary, key_1, key_2):
 
     data_extracted_1 = list()
     data_extracted_2 = list()
+    data_countries = list()
 
     for country in countries:
         if (key_1 in dictionary[country].keys()) and (key_2 in dictionary[country].keys()):
             data_extracted_1.append(dictionary[country][key_1])
             data_extracted_2.append(dictionary[country][key_2])
+            data_countries.append(country)
 
-    return data_extracted_1, data_extracted_2
+    return data_extracted_1, data_extracted_2, data_countries
