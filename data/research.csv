@@ -1,4 +1,4 @@
-Country,Expenditures on R&D (billions of USD),% of GDP,"Expenditures on R&D per capita  (US$ PPP),",Year,Source
+Country,Expenditures on R&D (billions of USD),Expenditures on R&D (% of GDP),"Expenditures on R&D per capita  (US$ PPP),",Year,Source
 China,553.4,2.19%,388,2018,[2]
 United States,511.1,2.744%,"1,586.35",2016,[3]
 European Union*,379.0,1.64%,658.94,2016,[3]

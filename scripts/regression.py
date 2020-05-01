@@ -5,7 +5,7 @@ from scipy.stats import linregress
 def regression_points(x, y):
     """Find regression line"""
     gradient, intercept, r_value, p_value, std_err = linregress(x, y)
-    print(f'{gradient} {r_value} {p_value}')
+    print(f'Gradient: {gradient}\tR: {r_value}\tp: {p_value}\n')
     mn = np.min(x)
     mx = np.max(x)
     x1 = np.linspace(mn, mx, 500)

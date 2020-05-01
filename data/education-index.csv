@@ -1,4 +1,4 @@
-Rank,Country,EducationIndex,Expected years of schooling,Mean years of schooling,HDI rank,Continent
+Rank,Country,Education Index,Expected years of schooling,Mean years of schooling,HDI rank,Continent
 1,Afghanistan,0.398,10.1,3.5,169,Asia
 2,Albania,0.715,14.2,9.6,75,Europe
 3,Algeria,0.658,14.4,7.8,83,Africa
