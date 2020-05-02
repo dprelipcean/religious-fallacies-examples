@@ -1,10 +1,14 @@
 import csv
 
 data_location = '../data/'
-data_files = {'education-index.csv': ['Education Index', 'Expected years of schooling', 'Mean years of schooling', 'HDI rank'],
-              'religiosity-levels.csv': ['Religion is important', 'Religion is unimportant'],
-              'happiness-index.csv': ['Happiness Score', 'GDP per capita', 'Social support', 'Healthy life expectancy', 'Freedom to make life choices', 'Generosity', 'Fight against corruption'],
-              'research.csv': ['Expenditures on R&D (billions of USD)', 'Expenditures on R&D (% of GDP)']}
+data_files = {
+    'education-index.csv': ['Education Index', 'Expected years of schooling', 'Mean years of schooling', 'HDI rank'],
+    'religiosity-levels.csv': ['Religion is important', 'Religion is unimportant'],
+    'happiness-index.csv': ['Happiness Score', 'GDP per capita', 'Social support', 'Healthy life expectancy', 'Freedom to make life choices', 'Generosity', 'Fight against corruption'],
+    'research.csv': ['Expenditures on R&D (billions of USD)', 'Expenditures on R&D (% of GDP)'],
+    'religious-diversity-index.csv': ['RDI'],
+    'crime-rate.csv': ['Rate']
+}
 
 
 def congregate_data():
