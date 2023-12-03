@@ -1,0 +1,2 @@
+- population: https://data.worldbank.org/indicator/SP.POP.TOTL
+- continent: https://ourworldindata.org/grapher/continents-according-to-our-world-in-data
