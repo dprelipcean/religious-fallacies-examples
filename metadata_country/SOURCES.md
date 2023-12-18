@@ -1,2 +1,3 @@
 - population: https://data.worldbank.org/indicator/SP.POP.TOTL
 - continent: https://ourworldindata.org/grapher/continents-according-to-our-world-in-data
+- religious composition: https://www.pewresearch.org/religion/2015/04/02/religious-projection-table/
